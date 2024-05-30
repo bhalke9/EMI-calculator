@@ -1,27 +1,20 @@
+
+let loanAmountValue, interestRateValue, MonthsToPayValue; // Define variables in the global scope
+
 function calculateLoan() {
-    loanAmountValue = document.getElementById("loan-amount").value;
-  
-    interestRateValue = document.getElementById("interest-rate").value;
-  
-    MonthsToPayValue = document.getElementById("months-to-pay").value;
-    /*
-    interest = (loanAmountValue * (interestRateValue * 0.01)) / MonthsToPayValue;
-  
-    monthlyPayment = (loanAmountValue / MonthsToPayValue + interest).toFixed(2);
-  
-    document.getElementById(
-      "payment"
-    ).innerHTML = `Monthly Payment: ${monthlyPayment}`;*/
-  }
+    loanAmountValue = parseFloat(document.getElementById("loan-amount").value); // Parse input values to numbers
+    interestRateValue = parseFloat(document.getElementById("interest-rate").value);
+    MonthsToPayValue = parseFloat(document.getElementById("months-to-pay").value);
+}
 
-  function loanCalculation(){
-    interest = (loanAmountValue * (interestRateValue * 0.01)) / MonthsToPayValue;
-  
-    monthlyPayment = (loanAmountValue / MonthsToPayValue + interest).toFixed(2);
+function loanCalculation() {
+    // Ensure loanAmountValue, interestRateValue, and MonthsToPayValue have valid values
+    if (isNaN(loanAmountValue) || isNaN(interestRateValue) || isNaN(MonthsToPayValue)) {
+        alert('Please enter valid numbers for loan amount, interest rate, and months to pay.');
+        return;
+    }
 
-    document.getElementById(
-        "payment"
-      ).innerHTML = `Monthly Payment: ${monthlyPayment}`;
-
-    
-  }
+    let r = interestRateValue / 12 / 100;
+    let emi = ((loanAmountValue * r * Math.pow(1 + r, MonthsToPayValue)) / (Math.pow(1 + r, MonthsToPayValue) - 1)).toFixed(2);
+    document.getElementById("payment").innerHTML = `Monthly Payment: ${emi}`;
+}
